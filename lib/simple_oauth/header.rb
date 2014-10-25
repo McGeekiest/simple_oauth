@@ -15,6 +15,7 @@ module SimpleOAuth
           :signature_method => 'HMAC-SHA1',
           :timestamp => Time.now.to_i.to_s,
           :version => '1.0',
+          :ignore_extra_keys => false
         }
       end
 
@@ -74,6 +75,12 @@ module SimpleOAuth
       attributes.merge(:oauth_signature => signature)
     end
 
+  private
+
+    def normalized_attributes
+      signed_attributes.sort_by { |k, _| k.to_s }.collect { |k, v| %(#{k}="#{self.class.escape(v)}") }.join(', ')
+    end
+
     def attributes
       matching_keys, extra_keys = options.keys.partition { |key| ATTRIBUTE_KEYS.include?(key) }
       if options[:ignore_extra_keys] || extra_keys.empty?
@@ -81,12 +88,6 @@ module SimpleOAuth
       else
         # fail "SimpleOAuth: Found extra option keys not matching ATTRIBUTE_KEYS:\n  [#{extra_keys.collect(&:inspect).join(', ')}]"
       end
-    end
-
-  private
-
-    def normalized_attributes
-      attributes.sort_by { |k, _| k.to_s }.collect { |k, v| %(#{k}="#{self.class.escape(v)}") }.join(', ')
     end
 
     def signature
