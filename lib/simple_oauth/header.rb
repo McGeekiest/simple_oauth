@@ -85,7 +85,7 @@ module SimpleOAuth
       if options[:ignore_extra_keys] || extra_keys.empty?
         Hash[options.select { |key, _value| matching_keys.include?(key) }.collect { |key, value| [:"oauth_#{key}", value] }]
       else
-        fail "SimpleOAuth: Found extra option keys not matching ATTRIBUTE_KEYS:\n  [#{extra_keys.collect(&:inspect).join(', ')}]"
+        # fail "SimpleOAuth: Found extra option keys not matching ATTRIBUTE_KEYS:\n  [#{extra_keys.collect(&:inspect).join(', ')}]"
       end
     end
 
