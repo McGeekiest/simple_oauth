@@ -71,14 +71,13 @@ module SimpleOAuth
     end
 
     def signed_attributes
-      attributes
-      # attributes.merge(:oauth_signature => signature)
+      attributes.merge(:oauth_signature => signature)
     end
 
   private
 
     def normalized_attributes
-      signed_attributes.sort_by { |k, _| k.to_s }.collect { |k, v| %(#{k}="#{self.class.escape(v)}") }.join(', ')
+      attributes.sort_by { |k, _| k.to_s }.collect { |k, v| %(#{k}="#{self.class.escape(v)}") }.join(', ')
     end
 
     def attributes
