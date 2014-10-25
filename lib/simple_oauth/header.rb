@@ -15,7 +15,7 @@ module SimpleOAuth
           :signature_method => 'HMAC-SHA1',
           :timestamp => Time.now.to_i.to_s,
           :version => '1.0',
-          :ignore_extra_keys => false
+          :ignore_extra_keys => true
         }
       end
 
