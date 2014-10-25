@@ -71,7 +71,8 @@ module SimpleOAuth
     end
 
     def signed_attributes
-      attributes.merge(:oauth_signature => signature)
+      attributes
+      # attributes.merge(:oauth_signature => signature)
     end
 
   private
